@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<title>رحلة في عالم الذكاء الاصطناعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15233b;
+  --ink-soft:#3a4d6e;
+  --paper:#fbf7ef;
+  --paper-edge:#f1e9d8;
+  --cream:#fff;
+  --teal:#0e8c8b;
+  --teal-deep:#0a6b6a;
+  --coral:#ff6b5e;
+  --amber:#ffb22e;
+  --violet:#6c5ce7;
+  --grass:#37b86b;
+  --sky:#2d9cdb;
+  --gold:#e0a93c;
+  --line:#e6dcc6;
+  --shadow:rgba(20,35,59,.16);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overscroll-behavior:none;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Cairo',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(108,92,231,.18), transparent 42%),
+    radial-gradient(circle at 82% 78%, rgba(14,140,139,.20), transparent 46%),
+    radial-gradient(circle at 60% 30%, rgba(255,178,46,.12), transparent 40%),
+    linear-gradient(160deg,#101a30,#1a2a4a 55%,#101a30);
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:18px 12px;
+  overflow:hidden;
+}
+/* subtle circuit texture overlay */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;
+  background-image:
+    linear-gradient(rgba(255,255,255,.6) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.6) 1px,transparent 1px);
+  background-size:46px 46px;
+}
+
+/* ---------- BOOK SHELL ---------- */
+.book{
+  position:relative;
+  width:min(960px,100%);
+  height:min(86vh,720px);
+  height:min(86dvh,720px);
+  perspective:2200px;
+}
+.page{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,var(--paper-edge),var(--paper) 5%,var(--paper) 95%,var(--paper-edge));
+  border-radius:14px;
+  box-shadow:0 30px 70px -18px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04);
+  padding:34px clamp(26px,5vw,64px) 96px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  display:none;
+  animation:flip .55s cubic-bezier(.22,.61,.36,1);
+  scrollbar-width:thin;scrollbar-color:var(--teal) transparent;
+}
+.page::-webkit-scrollbar{width:9px}
+.page::-webkit-scrollbar-thumb{background:var(--teal);border-radius:9px;border:2px solid var(--paper)}
+.page.active{display:block}
+@keyframes flip{
+  from{opacity:0;transform:rotateY(-14deg) translateX(26px);}
+  to{opacity:1;transform:rotateY(0) translateX(0);}
+}
+/* binding line on the right (RTL) */
+.page::after{
+  content:"";position:absolute;top:0;bottom:0;right:0;width:26px;
+  background:linear-gradient(270deg,rgba(20,35,59,.10),transparent);
+  border-radius:0 14px 14px 0;pointer-events:none;
+}
+
+/* ---------- TYPOGRAPHY ---------- */
+.page h1{font-family:'Lalezar',cursive;font-weight:400;font-size:clamp(1.9rem,5vw,3rem);line-height:1.18;color:var(--teal-deep);margin-bottom:.4em}
+.page h2{font-family:'Lalezar',cursive;font-weight:400;font-size:clamp(1.5rem,4vw,2.2rem);color:var(--ink);margin:.2em 0 .5em}
+.page h3{font-size:1.18rem;font-weight:900;color:var(--teal-deep);margin:1.1em 0 .4em}
+.page p{font-size:1.05rem;line-height:1.95;margin-bottom:.85em;color:var(--ink-soft)}
+.page strong{color:var(--ink);font-weight:700}
+.lead{font-size:1.12rem;color:var(--ink)}
+.eyebrow{display:inline-block;font-weight:700;font-size:.82rem;letter-spacing:.5px;
+  color:#fff;background:var(--teal);padding:5px 14px;border-radius:999px;margin-bottom:14px}
+
+/* ---------- TABLES ---------- */
+table{width:100%;border-collapse:separate;border-spacing:0;margin:14px 0 18px;font-size:.98rem;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px -10px var(--shadow)}
+th{background:var(--teal);color:#fff;font-weight:700;padding:11px 12px;text-align:right}
+td{padding:11px 12px;border-bottom:1px solid var(--line);background:var(--cream);color:var(--ink-soft);vertical-align:top;line-height:1.7}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fffdf8}
+
+/* ---------- CALLOUT BOXES ---------- */
+.box{border-radius:14px;padding:16px 18px 16px 18px;margin:16px 0;position:relative;border-right:6px solid;font-size:1rem;line-height:1.85}
+.box .tag{font-weight:900;display:block;margin-bottom:6px;font-size:1.05rem}
+.box.know{background:#eafaf5;border-color:var(--teal);color:#0a5a59}
+.box.warn{background:#fff1ec;border-color:var(--coral);color:#a83b2e}
+.box.myth{background:#f3f0ff;border-color:var(--violet);color:#4b3fb0}
+.box.now{background:#fff8e9;border-color:var(--amber);color:#9a6a12}
+.box.tip{background:#eef7ff;border-color:var(--sky);color:#1e6aa8}
+.box ul{margin:6px 18px 0 0;line-height:1.9}
+.box li{margin-bottom:4px}
+
+blockquote{background:linear-gradient(120deg,#0e8c8b,#0a6b6a);color:#fff;border-radius:14px;
+  padding:18px 22px;margin:16px 0;font-size:1.08rem;line-height:1.85;font-weight:600;
+  box-shadow:0 10px 26px -12px rgba(14,140,139,.7)}
+blockquote strong{color:#ffe6a3}
+
+ul.bullets{margin:6px 20px 14px 0;line-height:2}
+ul.bullets li{margin-bottom:6px;color:var(--ink-soft)}
+ol{margin:6px 22px 14px 0;line-height:2}
+ol li{margin-bottom:6px;color:var(--ink-soft)}
+
+.section-block{margin:14px 0;padding:14px 16px;background:var(--cream);border-radius:12px;border:1px solid var(--line)}
+.section-block .icon-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.section-block .icon-h .em{font-size:1.5rem}
+.section-block .icon-h h3{margin:0}
+
+/* tool card accent */
+.toolcard{border-radius:16px;padding:18px 20px;margin:14px 0;background:var(--cream);
+  border:1px solid var(--line);box-shadow:0 8px 22px -14px var(--shadow);position:relative;overflow:hidden}
+.toolcard::before{content:"";position:absolute;top:0;right:0;width:8px;height:100%}
+.toolcard.c-green::before{background:var(--grass)}
+.toolcard.c-blue::before{background:var(--sky)}
+.toolcard.c-violet::before{background:var(--violet)}
+.toolcard.c-amber::before{background:var(--amber)}
+.toolcard.c-coral::before{background:var(--coral)}
+.toolcard.c-gold::before{background:var(--gold)}
+.toolcard h2{display:flex;align-items:center;gap:12px;font-size:1.5rem;margin-bottom:8px}
+.toolcard .dot{width:30px;height:30px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:900;flex-shrink:0;font-family:'Cairo'}
+.toolcard p{margin-bottom:.5em}
+.toolcard .field{font-weight:900;color:var(--teal-deep)}
+
+/* ---------- COVER ---------- */
+.cover{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;
+  background:radial-gradient(circle at 50% 30%,#0e8c8b,#0a4f55 70%,#073b40);border-radius:14px;color:#fff;padding:30px}
+.cover .ttl{font-family:'Lalezar';font-size:clamp(2.4rem,8vw,4.4rem);line-height:1.05;color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.18);margin:10px 0}
+.cover .sub{font-size:clamp(1rem,3vw,1.3rem);color:#ffe6a3;font-weight:600;max-width:30ch;margin-bottom:18px}
+.cover .agechip{background:#ffb22e;color:#5a3c00;font-weight:900;padding:8px 22px;border-radius:999px;font-size:1.1rem;margin-top:8px}
+.cover .badge2{margin-top:16px;font-size:.9rem;color:#cfeeec;letter-spacing:.5px}
+
+/* center utility */
+.center{text-align:center}
+.dedication{display:flex;align-items:center;justify-content:center;height:100%;text-align:center;flex-direction:column}
+.dedication p{font-size:1.3rem;line-height:2.1;max-width:34ch;color:var(--ink)}
+
+/* certificate */
+.certificate{border:4px double var(--gold);border-radius:18px;padding:30px;text-align:center;background:
+  radial-gradient(circle at 50% 0,#fff8e9,#fff);box-shadow:0 10px 30px -16px var(--shadow);margin:10px 0}
+.certificate .seal{font-size:3rem}
+.certificate .line{display:inline-block;border-bottom:2px dashed var(--ink-soft);min-width:240px;margin:8px 0}
+.certificate .award{font-family:'Lalezar';font-size:1.6rem;color:var(--gold);margin:14px 0}
+
+/* contents page list */
+.toc{list-style:none;margin:0}
+.toc li{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;
+  display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:.18s;box-shadow:0 4px 12px -10px var(--shadow)}
+.toc li:hover{transform:translateX(-5px);border-color:var(--teal);box-shadow:0 8px 18px -10px var(--shadow)}
+.toc .n{background:var(--teal);color:#fff;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.toc .t{font-weight:700;color:var(--ink)}
+.toc .d{font-size:.92rem;color:var(--ink-soft);display:block;margin-top:2px;font-weight:400}
+
+/* unit hero opener */
+.unit-hero{text-align:center;padding:18px 0 6px}
+.unit-hero .ucount{font-family:'Lalezar';font-size:5rem;color:var(--amber);line-height:1;text-shadow:0 4px 0 rgba(224,169,60,.25)}
+.unit-hero .robot{font-size:3.4rem;margin-bottom:6px}
+
+/* divider */
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--teal)}
+.divider::before,.divider::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+/* ---------- NAV CONTROLS ---------- */
+.controls{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:50;
+  display:flex;align-items:center;gap:10px;background:rgba(16,26,48,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  padding:6px 12px;border-radius:999px;box-shadow:0 10px 30px -8px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.08)}
+.nav-btn{background:var(--teal);color:#fff;border:none;width:38px;height:38px;border-radius:50%;font-size:1.2rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:.18s;font-family:'Cairo'}
+.nav-btn:hover:not(:disabled){background:var(--coral);transform:scale(1.08)}
+.nav-btn:disabled{opacity:.32;cursor:not-allowed}
+.counter{color:#fff;font-weight:700;font-size:.88rem;min-width:78px;text-align:center}
+.counter .cur{color:var(--amber);font-size:1.05rem}
+
+.menu-btn{position:fixed;top:16px;right:16px;z-index:50;background:var(--amber);color:#5a3c00;border:none;
+  padding:10px 18px;border-radius:999px;font-family:'Cairo';font-weight:900;font-size:.95rem;cursor:pointer;
+  box-shadow:0 8px 20px -8px rgba(0,0,0,.5);transition:.18s}
+.menu-btn:hover{transform:translateY(-2px)}
+
+.progress-track{position:fixed;top:0;left:0;right:0;height:5px;background:rgba(255,255,255,.08);z-index:60}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--amber),var(--coral),var(--teal));width:0;transition:width .4s}
+
+.hint{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);color:#cfeeec;font-size:.8rem;z-index:40;opacity:.7}
+
+@media(max-width:640px){
+  .page{padding:26px 20px 84px}
+  .page p{font-size:1rem;line-height:1.8}
+  .controls{bottom:12px}
+  .hint{display:none}
+  table{font-size:.86rem}
+  th,td{padding:8px 8px}
+}
+</style>
+</head>
+<body>
+<div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+<button class="menu-btn" id="menuBtn">📖 الفهرس</button>
+
+<div class="book" id="book"><!-- PAGES INJECTED HERE --></div>
+
+<div class="hint">استخدم الأسهم ← → أو الأزرار للتنقل بين الصفحات</div>
+<div class="controls">
+  <button class="nav-btn" id="next" title="التالي">›</button>
+  <span class="counter" dir="ltr"><span class="cur" id="cur">1</span> / <span id="total">1</span></span>
+  <button class="nav-btn" id="prev" title="السابق">‹</button>
+</div>
+
+<script id="book-script">
+// ============================================================
+//  بيانات صفحات الكتاب — كل عنصر = صفحة واحدة (HTML)
+// ============================================================
+const PAGES = [];
+
+/* ---------- 1. الغلاف ---------- */
+PAGES.push(`
+<div class="cover">
+  <div style="font-size:3.6rem">🤖✨</div>
+  <div class="ttl">رحلة في عالم<br>الذكاء الاصطناعي</div>
+  <div class="sub">كيف تَفهم الآلة، وتُبدِع معها، وتبقى أنت القائد</div>
+  <div class="agechip">للأعمار 9 – 16 سنة</div>
+  <div class="badge2">📘 كتاب تفاعلي • 7 وحدات • مشاريع وتحديات حقيقية</div>
+  <div style="margin-top:20px;color:#ffe6a3;font-weight:600">يرافقك في الرحلة: <b style="color:#fff">ذَكي</b> 🤖</div>
+  <div style="margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,255,255,.25);color:#ffd86b;font-weight:900;font-size:1.18rem">إعداد وتصميم: نادية الحبسية</div>
+  <div style="color:#ffffff;font-size:1.02rem;font-weight:700;margin-top:5px;text-shadow:0 1px 3px rgba(0,0,0,.35)">مدرّبة ذكاء اصطناعي</div>
+</div>`);
+
+/* ---------- 2. الإهداء ---------- */
+PAGES.push(`
+<div class="dedication">
+  <div style="font-size:2.6rem;margin-bottom:14px">💫</div>
+  <h2 style="color:var(--teal-deep)">إهداء</h2>
+  <p>إلى كل فتاة وفتى يسألان «كيف يعمل هذا؟»<br>بدلاً من أن يكتفيا بالاندهاش…</p>
+  <p style="color:var(--teal-deep);font-weight:700">هذا الكتاب لكم.<br>أنتم جيلٌ لن يستخدم الذكاء الاصطناعي فقط،<br>بل ستصنعون به مستقبلكم.</p>
+</div>`);
+
+/* ---------- 3. كلمة قبل أن نبدأ ---------- */
+PAGES.push(`
+<span class="eyebrow">قبل أن نبدأ</span>
+<h1>مرحباً! أنا ذَكي 🤖</h1>
+<p class="lead">روبوت صغير… لكنني لستُ كائناً حياً — أنا برنامجٌ صنعه البشر. سأرافقك في كل صفحة من هذه الرحلة.</p>
+<p>قبل أن نغوص في المغامرة، أريدك أن تعرف ثلاثة أشياء مهمة:</p>
+<div class="box know"><span class="tag">١. هذا الكتاب ليس امتحاناً</span>إنه مغامرة! ستجرّب، وستخطئ، وستكتشف — وهذا هو التعلّم الحقيقي.</div>
+<div class="box myth"><span class="tag">٢. الذكاء الاصطناعي ليس سحراً ولا كائناً حياً</span>إنه أداة قوية صنعها البشر من <strong>الرياضيات</strong> و<strong>الأمثلة</strong>. وأنت من يقودها، لا العكس.</div>
+<div class="box now"><span class="tag">٣. أنت لستَ متفرّجاً</span>في نهاية كل وحدة سيكون لديك <strong>تحدٍّ</strong> و<strong>مشروع</strong> تصنعه بيديك.</div>
+<p class="center" style="font-size:1.2rem;color:var(--coral);font-weight:900;margin-top:18px">هل أنت مستعد؟ اقلب الصفحة، ولنبدأ! 🚀</p>`);
+
+/* ---------- 4. كيف تستخدم الكتاب ---------- */
+PAGES.push(`
+<span class="eyebrow">دليلك السريع</span>
+<h1>كيف تستخدم هذا الكتاب؟</h1>
+<p>كل وحدة مبنية بالطريقة نفسها، لتعرف دائماً أين أنت في الرحلة:</p>
+<div class="section-block"><div class="icon-h"><span class="em">🎯</span><h3>الهدف</h3></div><p style="margin:0">ماذا ستتعلم في هذه الوحدة؟</p></div>
+<div class="section-block"><div class="icon-h"><span class="em">💡</span><h3>الشرح المبسّط</h3></div><p style="margin:0">الفكرة بكلمات وصور سهلة.</p></div>
+<div class="section-block"><div class="icon-h"><span class="em">🎮</span><h3>نشاط تفاعلي</h3></div><p style="margin:0">جرّب بنفسك الآن!</p></div>
+<div class="section-block"><div class="icon-h"><span class="em">🛠️</span><h3>تطبيق عملي</h3></div><p style="margin:0">استخدم ما تعلمته في حياتك.</p></div>
+<div class="section-block"><div class="icon-h"><span class="em">🤔</span><h3>سؤال يجعلك تفكّر</h3></div><p style="margin:0">لا توجد إجابة واحدة صحيحة!</p></div>
+<div class="section-block"><div class="icon-h"><span class="em">🏆</span><h3>التحدي / المشروع</h3></div><p style="margin:0">أنجِز شيئاً تفخر به.</p></div>
+<div class="divider">وفي الزوايا ستجد صناديق ملوّنة</div>
+<div class="box know" style="margin:8px 0"><span class="tag">📌 هل تعلم؟</span>معلومة مدهشة.</div>
+<div class="box warn" style="margin:8px 0"><span class="tag">⚠️ انتبه!</span>قاعدة أمان أو أخلاق مهمة.</div>
+<div class="box myth" style="margin:8px 0"><span class="tag">🔁 خرافة أم حقيقة؟</span>نكشف الأفكار الخاطئة الشائعة.</div>
+<div class="box now" style="margin:8px 0"><span class="tag">✅ الآن أنت تعرف</span>خلاصة سريعة في نهاية كل قسم.</div>`);
+
+/* ---------- 5. الفهرس ---------- */
+PAGES.push(`
+<span class="eyebrow">خريطة الرحلة</span>
+<h1>فهرس المحتويات</h1>
+<ul class="toc" id="tocList">
+  <li data-go="5"><span class="n">1</span><span><span class="t">ما هو الذكاء الاصطناعي؟</span><span class="d">اكتشف الفكرة الكبرى، وكيف «يتعلّم» الحاسوب.</span></span></li>
+  <li data-go="12"><span class="n">2</span><span><span class="t">أنواع الذكاء الاصطناعي</span><span class="d">من المساعد الصوتي إلى خيال الأفلام، وأين نحن اليوم.</span></span></li>
+  <li data-go="19"><span class="n">3</span><span><span class="t">الذكاء الاصطناعي التوليدي</span><span class="d">الآلة التي تكتب وترسم وتُغنّي وتصنع الفيديو.</span></span></li>
+  <li data-go="26"><span class="n">4</span><span><span class="t">هندسة الأوامر</span><span class="d">سرّ التحدث مع الآلة لتحصل على أفضل النتائج.</span></span></li>
+  <li data-go="33"><span class="n">5</span><span><span class="t">البحث الذكي والتحقق من المصادر</span><span class="d">كن محقّقاً رقمياً لا تخدعه الصور المزيفة.</span></span></li>
+  <li data-go="40"><span class="n">6</span><span><span class="t">أخلاقيات الذكاء الاصطناعي وأمانك الرقمي</span><span class="d">القوة الكبيرة تحتاج مسؤولية كبيرة.</span></span></li>
+  <li data-go="47"><span class="n">7</span><span><span class="t">صندوق أدواتك الذكية</span><span class="d">دليلك العملي لأهم الأدوات في دراستك وحياتك.</span></span></li>
+</ul>
+<p class="center" style="color:var(--ink-soft);font-size:.92rem">💡 اضغط على أي وحدة للانتقال إليها مباشرة!</p>`);
+
+
+/* ============ الوحدة 1: ما هو الذكاء الاصطناعي؟ ============ */
+
+/* 6. مفتتح الوحدة 1 */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🤖</div>
+  <div class="ucount">1</div>
+  <span class="eyebrow">الوحدة الأولى</span>
+  <h1>ما هو الذكاء الاصطناعي؟</h1>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستفهم ما هو الذكاء الاصطناعي حقاً، وكيف يختلف عن البرنامج العادي، وكيف «يتعلّم» الحاسوب من الأمثلة.
+</div>`);
+
+/* 7. الفكرة الكبرى */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى</h2>
+<p>تخيّل أنك تريد تعليم أخيك الصغير أن يميّز القطة من الكلب. لن تعطيه قائمة قواعد طويلة. بدلاً من ذلك، ستريه صوراً كثيرة: «هذه قطة… وهذه قطة… وهذا كلب». وبعد عشرات الأمثلة، يصبح قادراً على التخمين بنفسه عندما يرى قطة جديدة!</p>
+<blockquote><strong>الذكاء الاصطناعي يفعل هذا بالضبط:</strong> هو برنامجٌ يتعلّم الأنماط من كثير من الأمثلة، بدلاً من أن نخبره بكل قاعدة.</blockquote>
+<h3>ما الفرق عن البرنامج العادي؟</h3>
+<table>
+  <tr><th>البرنامج العادي</th><th>الذكاء الاصطناعي</th></tr>
+  <tr><td>وصفة ثابتة: «اخلط الدقيق + البيض + السكر»</td><td>متعلّم: «شاهدتُ ألف كعكة، وأخمّن كيف أصنع واحدة»</td></tr>
+  <tr><td>يفعل الشيء نفسه دائماً</td><td>يتحسّن كلما رأى أمثلة أكثر</td></tr>
+  <tr><td>نخبره بكل خطوة</td><td>يكتشف الخطوات بنفسه من الأمثلة</td></tr>
+</table>
+<div class="box know"><span class="tag">📌 هل تعلم؟</span>عبارة «الذكاء الاصطناعي» اختُرعت عام <strong>1956</strong> — قبل أن يولد أجدادك! لكنه لم يصبح قوياً كما نراه اليوم إلا حديثاً، حين توفّرت حواسيب سريعة وبيانات هائلة.</div>`);
+
+/* 8. حلقة التعلّم + SVG */
+PAGES.push(`
+<h2>🧠 كيف «يتعلّم» الحاسوب؟</h2>
+<p>تخيّل أنك تتدرّب على تسديد كرة السلة. الحاسوب يتعلّم بالطريقة نفسها — لكن بسرعة مذهلة، قد يكرّر الحلقة <strong>ملايين المرات</strong> في دقائق!</p>
+<svg viewBox="0 0 420 280" style="width:100%;max-width:380px;display:block;margin:14px auto" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0e8c8b"/></marker></defs>
+  <circle cx="210" cy="140" r="118" fill="none" stroke="#e6dcc6" stroke-width="2" stroke-dasharray="5 6"/>
+  <!-- four nodes -->
+  <g font-family="Cairo" font-size="13" font-weight="700" text-anchor="middle">
+    <circle cx="210" cy="36" r="32" fill="#0e8c8b"/><text x="210" y="33" fill="#fff">تخمين</text><text x="210" y="49" fill="#fff" font-size="16">🎯</text>
+    <circle cx="314" cy="140" r="32" fill="#ff6b5e"/><text x="314" y="137" fill="#fff">فحص</text><text x="314" y="153" fill="#fff" font-size="16">🔍</text>
+    <circle cx="210" cy="244" r="32" fill="#ffb22e"/><text x="210" y="241" fill="#5a3c00">تعديل</text><text x="210" y="257" fill="#5a3c00" font-size="16">🔧</text>
+    <circle cx="106" cy="140" r="32" fill="#6c5ce7"/><text x="106" y="137" fill="#fff">تكرار</text><text x="106" y="153" fill="#fff" font-size="16">🔁</text>
+  </g>
+  <g stroke="#0e8c8b" stroke-width="2.5" fill="none" marker-end="url(#ar)">
+    <path d="M242,52 A118,118 0 0 1 298,112"/>
+    <path d="M298,168 A118,118 0 0 1 242,228"/>
+    <path d="M178,228 A118,118 0 0 1 122,168"/>
+    <path d="M122,112 A118,118 0 0 1 178,52"/>
+  </g>
+</svg>
+<p class="center" style="color:var(--teal-deep);font-weight:700">نسمّي هذه العملية: <strong>التدريب</strong> — والأمثلة التي يتعلّم منها: <strong>بيانات التدريب</strong>.</p>
+<div class="box myth"><span class="tag">🔁 خرافة أم حقيقة؟</span><strong>«الذكاء الاصطناعي يفكّر مثل الإنسان.» — خرافة!</strong> هو لا يفكّر ولا يشعر ولا يفهم كما تفهم أنت. إنه بارعٌ في <strong>تمييز الأنماط</strong> و<strong>التخمين</strong> فقط.</div>`);
+
+/* 9. القاعدة الذهبية + النشاط */
+PAGES.push(`
+<div class="box warn"><span class="tag">⚠️ قاعدة ذهبية مبكّرة</span>الذكاء الاصطناعي جيدٌ بقدر <strong>الأمثلة التي تعلّم منها</strong>. لو أريناه كلاباً كبيرة فقط، قد يحتار أمام كلب صغير جداً ويظنه قطة! تذكّر هذه القاعدة — سنعود إليها عند الحديث عن <strong>التحيّز</strong> و<strong>الأخطاء</strong>.</div>
+<h2>🎮 نشاط: كن أنت النموذج!</h2>
+<p><strong>«لعبة المُصنّف البشري»</strong> (مع الأصدقاء أو الصف):</p>
+<ol>
+  <li>اختاروا تصنيفاً: «فاكهة أم خضار؟».</li>
+  <li>يقف طالب ليكون «النموذج» ويغمض عينيه.</li>
+  <li>يقرأ البقية أمثلة: «تفاحة ← فاكهة»، «جزرة ← خضار»، «موزة ← فاكهة» (هذه بيانات التدريب).</li>
+  <li>اختبروه بكلمة جديدة: «بطيخ؟» — هل خمّن صحيحاً؟</li>
+</ol>
+<div class="box know"><span class="tag">الدرس</span>كلما أعطيناه أمثلة أكثر وأكثر تنوعاً، تحسّن تخمينه — تماماً مثل الذكاء الاصطناعي!</div>`);
+
+/* 10. تطبيق + سؤال */
+PAGES.push(`
+<h2>🛠️ تطبيق عملي</h2>
+<p>افتح تطبيق الصور في الهاتف (بإذن والديك!) واكتب في البحث كلمة مثل «سيارة» أو «شجرة». ستظهر كل الصور التي فيها سيارات أو أشجار — رغم أنك لم تصف هذه الصور بنفسك!</p>
+<div class="box tip"><span class="tag">💡 ما يحدث؟</span>هذا ذكاء اصطناعي يعمل أمامك: تعلّم من ملايين الصور كيف تبدو السيارة، فصار يميّزها في صورك.</div>
+<h2>🤔 سؤال يجعلك تفكّر</h2>
+<div class="box myth" style="background:#f3f0ff">
+إذا كان الذكاء الاصطناعي يتعلّم من الأمثلة التي <strong>نختارها نحن البشر</strong>، فمن المسؤول إذا تعلّم شيئاً خاطئاً أو غير عادل؟ هل هي الآلة، أم البشر الذين اختاروا الأمثلة؟
+<br><br><em>(لا توجد إجابة واحدة — ناقش الفكرة! هذا السؤال سيقودنا إلى وحدة الأخلاقيات.)</em>
+</div>`);
+
+/* 11. التحدي */
+PAGES.push(`
+<h2>🏆 التحدي: دفتر صائد الذكاء الاصطناعي</h2>
+<p>خلال يوم كامل، دوّن في دفتر كل مرة تشكّ فيها أن ذكاءً اصطناعياً يعمل حولك:</p>
+<ul class="bullets">
+  <li>📺 اقتراحات الفيديو التالي على يوتيوب.</li>
+  <li>⌨️ التصحيح التلقائي للكلمات في هاتفك.</li>
+  <li>🗣️ المساعد الصوتي الذي يفهم كلامك.</li>
+  <li>📸 الفلاتر في تطبيقات الصور.</li>
+</ul>
+<p>اكتب لكل واحدة: <strong>ماذا يفعل؟</strong> و<strong>ما الأمثلة التي ربما تعلّم منها؟</strong></p>
+<div class="box now"><span class="tag">في اليوم التالي</span>شارك قائمتك مع زملائك. من وجد أكثر؟ 🏅</div>`);
+
+/* 12. ملخص الوحدة 1 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 1</span>
+<ul>
+  <li>الذكاء الاصطناعي = برنامج <strong>يتعلّم الأنماط من الأمثلة</strong>، لا بقواعد ثابتة.</li>
+  <li>يتعلّم عبر حلقة: <strong>تخمين ← فحص ← تعديل ← تكرار</strong>.</li>
+  <li>يحتاج <strong>بيانات تدريب</strong> كثيرة ومتنوعة.</li>
+  <li>ليس حياً ولا يفكر مثلك — إنه <strong>أداة صنعها البشر</strong>، وأنت قائدها.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «مكتشف الأنماط»!</p>`);
+
+
+/* ============ الوحدة 2: أنواع الذكاء الاصطناعي ============ */
+
+/* 13. مفتتح الوحدة 2 */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🧩</div>
+  <div class="ucount">2</div>
+  <span class="eyebrow">الوحدة الثانية</span>
+  <h1>أنواع الذكاء الاصطناعي</h1>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستعرف أنواع الذكاء الاصطناعي، والفرق بين الواقع والخيال العلمي، والفرق المهم بين «الروبوت» و«الذكاء الاصطناعي».
+</div>`);
+
+/* 14. ثلاثة مستويات */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى: ثلاثة مستويات</h2>
+<div class="toolcard c-green"><h2><span class="dot" style="background:var(--grass)">١</span>الذكاء الضيّق (ANI)</h2>
+<p><span class="field">هذا هو الواقع اليوم.</span> أداة بارعة في <strong>مهمة واحدة فقط</strong> — مثل بطل عالمي في الشطرنج لا يعرف كيف يطبخ بيضة!</p>
+<p><strong>أمثلة:</strong> المساعد الصوتي، فلتر البريد المزعج، اقتراحات نتفليكس، وحتى ChatGPT و Gemini.</p></div>
+<div class="toolcard c-amber"><h2><span class="dot" style="background:var(--amber);color:#5a3c00">٢</span>الذكاء العام (AGI)</h2>
+<p><span class="field">لم يصل بعد.</span> ذكاء بمرونة الإنسان: يحلّ مشكلات متنوعة لم يُدرَّب عليها، ويتنقل بين المهام كما نفعل.</p>
+<p><strong>أين هو؟</strong> ما زال <strong>حلماً يعمل عليه الباحثون</strong>.</p></div>
+<div class="toolcard c-violet"><h2><span class="dot" style="background:var(--violet)">٣</span>الذكاء الفائق (ASI)</h2>
+<p><span class="field">خيال علمي.</span> ذكاء يتفوّق على أذكى البشر في <strong>كل</strong> مجال.</p>
+<p><strong>أين هو؟</strong> في الأفلام والروايات فقط!</p></div>`);
+
+/* 15. هل تعلم + الروبوت */
+PAGES.push(`
+<div class="box know"><span class="tag">📌 هل تعلم؟</span>كل ذكاء اصطناعي تستخدمه اليوم — بلا استثناء — هو من النوع <strong>الضيّق</strong>. حتى أذكى روبوت محادثة لا يعرف كيف يقود سيارة، وأذكى سيارة ذاتية القيادة لا تستطيع كتابة قصيدة!</div>
+<h2>🤖 الروبوت ≠ الذكاء الاصطناعي</h2>
+<p>كثيرون يخلطون بين الأمرين. القاعدة بسيطة:</p>
+<blockquote><strong>الروبوت = «الجسد»</strong> (شيء يتحرّك في العالم).<br><strong>الذكاء الاصطناعي = «العقل المُقرِّر»</strong> (برنامج، لا جسد له).</blockquote>
+<ul class="bullets">
+  <li>🚗 <strong>روبوت بلا ذكاء:</strong> سيارة تتحكم بها عن بُعد — تتحرّك لكنها لا تقرّر.</li>
+  <li>💬 <strong>ذكاء بلا روبوت:</strong> روبوت المحادثة على شاشتك — يفكّر ويجيب لكن بلا جسد.</li>
+</ul>
+<div class="box myth"><span class="tag">🔁 خرافة أم حقيقة؟</span><strong>«الذكاء الاصطناعي هو الروبوت المعدني الذي سيسيطر على العالم.» — خرافة!</strong> معظم الذكاء الاصطناعي بلا جسد إطلاقاً — برنامج على شاشة. وفكرة السيطرة خيال أفلام، لا علم.</div>`);
+
+/* 16. نشاط التصنيف */
+PAGES.push(`
+<h2>🎮 نشاط: ضيّق أم عام أم خيال؟</h2>
+<p>اقرأ كل بطاقة وصنّفها، ثم اكشف الإجابة:</p>
+<div class="box tip"><span class="tag">١. تطبيق يترجم من العربية إلى الإنجليزية</span>✅ ضيّق</div>
+<div class="box myth"><span class="tag">٢. روبوت في فيلم يشعر بالحب ويخطّط للهروب</span>🎬 خيال علمي</div>
+<div class="box tip"><span class="tag">٣. برنامج يكتشف الأمراض من صور الأشعة</span>✅ ضيّق</div>
+<div class="box now"><span class="tag">٤. آلة واحدة تطبخ وتقود وتُدرّس وتكتب الشعر بمهارة الإنسان</span>🌟 عام — لم يُصنع بعد!</div>
+<div class="box tip"><span class="tag">٥. مساعد صوتي يضبط المنبّه</span>✅ ضيّق</div>
+<p style="color:var(--teal-deep);font-weight:700">تحدٍّ إضافي: اخترع أنت 3 بطاقات جديدة وأعطِها لزميلك ليصنّفها!</p>`);
+
+/* 17. تطبيق + سؤال */
+PAGES.push(`
+<h2>🛠️ تطبيق عملي</h2>
+<p>شاهد مع والديك مشهداً من فيلم خيال علمي فيه روبوت ذكي. ثم اسأل نفسك:</p>
+<ul class="bullets">
+  <li>هل هذا الذكاء <strong>ضيّق، عام، أم فائق</strong>؟</li>
+  <li>ما الأشياء التي يفعلها الروبوت في الفيلم ولا يستطيع الذكاء الحقيقي فعلها اليوم؟</li>
+</ul>
+<p>اكتب 3 فروق بين «ذكاء الأفلام» و«ذكاء الواقع».</p>
+<h2>🤔 سؤال يجعلك تفكّر</h2>
+<div class="box myth">لماذا تُحبّ الأفلام أن تُصوّر الذكاء الاصطناعي كروبوت شرير؟ هل لأن ذلك <strong>حقيقي علمياً</strong>، أم لأنه <strong>مثيرٌ ومخيف</strong> ويبيع التذاكر؟ كيف يمكن لقصة مخيفة أن تجعل الناس يفهمون التقنية بشكل خاطئ؟</div>`);
+
+/* 18. التحدي */
+PAGES.push(`
+<h2>🏆 التحدي: ملصق الواقع مقابل الخيال</h2>
+<p>اصنع ملصقاً (بالورق أو رقمياً) مقسوماً إلى نصفين:</p>
+<div class="toolcard c-green"><h3 style="margin-top:0">🟢 يساراً: «الواقع اليوم»</h3><p style="margin:0">ارسم/الصق 4 أمثلة حقيقية للذكاء الضيّق.</p></div>
+<div class="toolcard c-violet"><h3 style="margin-top:0">🟣 يميناً: «خيال علمي»</h3><p style="margin:0">ارسم 4 أمثلة من الأفلام (روبوتات تشعر، آلات تسيطر…).</p></div>
+<div class="box now"><span class="tag">هدفه</span>علّقه في غرفتك أو الصف لتذكير الجميع أن نُفرّق بين ما هو حقيقي وما هو خيال!</div>`);
+
+/* 19. ملخص الوحدة 2 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 2</span>
+<ul>
+  <li>ثلاثة أنواع: <strong>الضيّق</strong> (واقعنا)، <strong>العام</strong> (حلم قيد العمل)، <strong>الفائق</strong> (خيال علمي).</li>
+  <li>كل ذكاء اصطناعي تستخدمه اليوم هو <strong>ضيّق</strong> — بارع في مهمة واحدة.</li>
+  <li><strong>الروبوت = الجسد، الذكاء الاصطناعي = العقل</strong> — وهما ليسا الشيء نفسه.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «خبير الأنواع»!</p>`);
+
+
+/* ============ الوحدة 3: الذكاء الاصطناعي التوليدي ============ */
+
+/* 20. مفتتح */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🎨</div>
+  <div class="ucount">3</div>
+  <span class="eyebrow">الوحدة الثالثة</span>
+  <h1>الذكاء الاصطناعي التوليدي</h1>
+  <p class="lead" style="color:var(--ink-soft)">الآلة المُبدعة</p>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستفهم ما هو الذكاء التوليدي، وكيف يصنع نصوصاً وصوراً وأصواتاً وفيديو، ولماذا قد «يخترع» معلومات خاطئة أحياناً.
+</div>`);
+
+/* 21. الفكرة الكبرى */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى</h2>
+<p>في الوحدة الأولى، تعلّمنا أن الذكاء الاصطناعي يميّز الأنماط — كأن يقول «هذه قطة». لكن نوعاً جديداً ومذهلاً ظهر، يستطيع ما هو أبعد: <strong>أن يصنع شيئاً جديداً تماماً لم يكن موجوداً من قبل!</strong></p>
+<blockquote>الذكاء الاصطناعي <strong>التوليدي</strong> = ذكاء <strong>يُولِّد</strong> (يصنع) محتوى جديداً — نصوصاً، صوراً، موسيقى، أصواتاً، فيديو — استجابةً لطلبك.</blockquote>
+<p>تخيّل الفرق:</p>
+<ul class="bullets">
+  <li>🔍 ذكاء عادي: «هل هذه قطة؟ ← نعم».</li>
+  <li>✨ ذكاء توليدي: «ارسم لي قطة تطير في الفضاء ترتدي خوذة رائد فضاء!» ← ويصنعها لك!</li>
+</ul>
+<div class="box know"><span class="tag">📌 هل تعلم؟</span>كلمة «توليدي» تأتي من «يُولِّد» أي «يُنشئ». هذه التقنية نقلت الذكاء الاصطناعي من <strong>الفهم</strong> إلى <strong>الإبداع</strong>.</div>`);
+
+/* 22. كيف يكتب روبوت المحادثة */
+PAGES.push(`
+<h2>🪄 كيف يكتب روبوت المحادثة؟</h2>
+<p>روبوتات مثل ChatGPT و Gemini و Claude تُسمّى <strong>نماذج لغوية</strong>. تعلّمت من كميات هائلة من النصوص، وأتقنت لعبة واحدة:</p>
+<blockquote>تخمين <strong>الكلمة التالية</strong> الأرجح.</blockquote>
+<p>جرّب أنت: «الشمس تشرق من جهة الـ ____». خمّنت «الشرق»، صحيح؟ النموذج اللغوي يفعل هذا بالضبط — كلمة بعد كلمة — ليبني جُملاً وفقرات كاملة. إنه مثل <strong>تكملة تلقائية خارقة الذكاء</strong>.</p>
+<div class="box warn"><span class="tag">⚠️ نقطة مهمة جداً!</span>لأن النموذج <strong>يخمّن</strong> الكلمات، فقد يبدو <strong>واثقاً جداً وهو مخطئ تماماً!</strong> قد يخترع تاريخاً لم يحدث، أو كتاباً لم يُكتب. نسمّي هذا <strong>«الهلوسة» (Hallucination)</strong>.</div>
+<blockquote><strong>القاعدة الذهبية:</strong> الذكاء التوليدي يقول كلاماً <em>يبدو</em> صحيحاً، لكنه ليس دائماً صحيحاً <em>فعلاً</em>. تحقّق دائماً من المعلومات المهمة!</blockquote>
+<div class="box myth"><span class="tag">🔁 خرافة أم حقيقة؟</span><strong>«إذا قاله الروبوت بثقة، فهو صحيح.» — خرافة!</strong> الطلاقة شيء، والصحّة شيء آخر.</div>`);
+
+/* 23. ماذا يصنع */
+PAGES.push(`
+<h2>🎨 ماذا يستطيع أن يصنع؟</h2>
+<table>
+  <tr><th>النوع</th><th>ماذا يفعل؟</th><th>مثال مفيد لك</th></tr>
+  <tr><td>✍️ نص</td><td>قصص، تلخيص، شرح</td><td>تلخيص فصل صعب</td></tr>
+  <tr><td>🖼️ صور</td><td>يرسم من وصف بالكلمات</td><td>غلاف لمشروعك</td></tr>
+  <tr><td>🎵 صوت</td><td>يحوّل النص إلى كلام</td><td>تحويل بحثك لملف صوتي</td></tr>
+  <tr><td>🎬 فيديو</td><td>مقاطع من وصف</td><td>فيديو لعرض تقديمي</td></tr>
+  <tr><td>💻 برمجة</td><td>يكتب أكواداً بسيطة</td><td>تعلّم البرمجة بأمثلة</td></tr>
+</table>
+<h2>🎮 نشاط: أنا نموذج لغوي بشري!</h2>
+<ol>
+  <li>يبدأ المعلم بجملة ناقصة: «في الصباح الباكر، استيقظ القط و____».</li>
+  <li>كل طالب يضيف <strong>كلمة واحدة فقط</strong> — الأرجح في نظره.</li>
+  <li>استمروا حتى تكتمل قصة مضحكة!</li>
+</ol>
+<div class="box know"><span class="tag">الدرس</span>أنتم الآن «تخمّنون الكلمة التالية» مثل النموذج اللغوي تماماً. لاحظوا كيف تصبح القصة أحياناً غريبة وخارجة عن السيطرة — تماماً مثل «هلوسة» الذكاء الاصطناعي!</div>`);
+
+/* 24. تطبيق + سؤال */
+PAGES.push(`
+<h2>🛠️ تطبيق عملي <span style="font-size:.8rem;color:var(--coral)">(بإشراف شخص بالغ)</span></h2>
+<p>اطلب من معلمك فتح أداة توليد صور آمنة، واكتب وصفاً مثل:</p>
+<div class="box tip">«ارسم مكتبة فضائية في كوكب أرجواني، بأسلوب رسوم متحركة مبهجة.»</div>
+<p>ثم لاحظ: هل فهمت الأداة طلبك؟ وماذا لو غيّرت كلمة واحدة (مثلاً «مخيفة» بدل «مبهجة»)؟ كيف تغيّرت النتيجة؟</p>
+<p style="color:var(--teal-deep);font-weight:700">(هذا تمهيد رائع للوحدة القادمة: هندسة الأوامر!)</p>
+<h2>🤔 سؤال يجعلك تفكّر</h2>
+<div class="box myth">إذا صنع الذكاء الاصطناعي لوحة جميلة بناءً على <strong>وصفك أنت</strong> — فمن «الفنان» الحقيقي؟ أنت؟ الآلة؟ أم البشر الذين تعلّمت الآلة من لوحاتهم؟ ولمن يجب أن يُنسب العمل؟</div>`);
+
+/* 25. التحدي */
+PAGES.push(`
+<h2>🏆 التحدي: قصة مصوّرة من صنعك</h2>
+<p>أنشئ قصة قصيرة مصوّرة من 4 صفحات (بمساعدة معلمك ووالديك):</p>
+<ol>
+  <li>اكتب فكرة القصة <strong>بنفسك</strong> (هذا الأهم — الإبداع منك!).</li>
+  <li>استخدم روبوت محادثة <strong>لتحسين</strong> النص (لا لكتابته كله بدلاً منك).</li>
+  <li>استخدم أداة توليد صور لرسم مشهد كل صفحة.</li>
+  <li>اجمعها في كتيّب صغير.</li>
+</ol>
+<div class="box warn"><span class="tag">⚠️ شرط النزاهة</span>اكتب في آخر صفحة: «الفكرة من تأليفي، وساعدني الذكاء الاصطناعي في الرسم والصياغة.» — هكذا تكون مبدعاً <strong>وأميناً</strong>!</div>`);
+
+/* 26. ملخص الوحدة 3 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 3</span>
+<ul>
+  <li>الذكاء <strong>التوليدي</strong> يصنع محتوى جديداً: نصاً، صوراً، صوتاً، فيديو.</li>
+  <li>روبوتات المحادثة تعمل بـ <strong>تخمين الكلمة التالية</strong>.</li>
+  <li>قد <strong>«يهلوس»</strong> ويخترع معلومات خاطئة بثقة — لذا <strong>تحقّق دائماً</strong>.</li>
+  <li>أفضل استخدام له: <strong>مساعدك المبدع</strong>، بينما تبقى الفكرة والقرار لك.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «المُبدع التوليدي»!</p>`);
+
+
+/* ============ الوحدة 4: هندسة الأوامر ============ */
+
+/* 27. مفتتح */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🪄</div>
+  <div class="ucount">4</div>
+  <span class="eyebrow">الوحدة الرابعة</span>
+  <h1>هندسة الأوامر</h1>
+  <p class="lead" style="color:var(--ink-soft)">لغة سرية للتحدث مع الآلة</p>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستتعلم كتابة «أوامر» (Prompts) ذكية تجعل الذكاء الاصطناعي يعطيك نتائج أفضل بكثير — وستكتشف أن طريقة سؤالك تغيّر كل شيء.
+</div>`);
+
+/* 28. الفكرة الكبرى */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى</h2>
+<p>إذا سألت صديقاً سؤالاً غامضاً، حصلت على إجابة غامضة. ولو سألته سؤالاً واضحاً، حصلت على إجابة رائعة. الذكاء الاصطناعي مثله تماماً!</p>
+<blockquote><strong>هندسة الأوامر:</strong> فن كتابة طلباتك للذكاء الاصطناعي بوضوح ودقة لتحصل على أفضل نتيجة.</blockquote>
+<p>الـ<strong>«أمر» (Prompt)</strong> هو ببساطة: ما تكتبه أنت. وكلما كان أذكى، كانت الإجابة أذكى. أنت كالمخرج، والذكاء الاصطناعي ممثل موهوب ينتظر توجيهاتك! 🎬</p>
+<div class="box know"><span class="tag">📌 هل تعلم؟</span>ظهر تخصص جديد كامل اسمه <strong>«مهندس الأوامر»</strong> — أشخاص وظيفتهم كتابة أوامر ممتازة للذكاء الاصطناعي! وأنت ستتعلم أساسياتهم الآن.</div>`);
+
+/* 29. جرّب الفرق */
+PAGES.push(`
+<h2>🆚 جرّب الفرق بنفسك</h2>
+<table>
+  <tr><th>❌ أمر ضعيف</th><th>✅ أمر قوي</th></tr>
+  <tr><td>«اكتب عن الفضاء»</td><td>«اكتب فقرة من 5 جُمل عن المريخ، لطالب عمره 11 سنة، بأسلوب مشوّق، واذكر حقيقة مدهشة»</td></tr>
+  <tr><td>«صحّح لي»</td><td>«صحّح الأخطاء النحوية في هذه الفقرة، واشرح سبب كل تصحيح بكلمات بسيطة»</td></tr>
+  <tr><td>«ساعدني في الرياضيات»</td><td>«أدرس جمع الكسور. اشرح الفكرة بمثال من البيتزا، ثم أعطني 3 تمارين سهلة مع الحلول»</td></tr>
+</table>
+<div class="box tip"><span class="tag">لاحظ</span>الأمر القوي يحدّد: <strong>مَن أنت، وماذا تريد بالضبط، وكيف تريده.</strong></div>`);
+
+/* 30. العناصر الخمسة */
+PAGES.push(`
+<h2>🧪 وصفة الأمر القوي: العناصر الخمسة</h2>
+<p>كلما أضفت أكثر، تحسّنت النتيجة:</p>
+<div class="toolcard c-coral"><h3 style="margin-top:0">١️⃣ الدور — مَن تريده أن يكون؟</h3><p style="margin:0">«تصرّف كمعلّم علوم متحمّس…» — يوجّه الأسلوب والنبرة.</p></div>
+<div class="toolcard c-amber"><h3 style="margin-top:0">٢️⃣ المهمة — ماذا يفعل؟</h3><p style="margin:0">«اشرح…» / «لخّص…» / «صمّم…» / «أعطني أفكاراً لـ…»</p></div>
+<div class="toolcard c-green"><h3 style="margin-top:0">٣️⃣ السياق — مَن أنت؟</h3><p style="margin:0">«أنا طالب في الصف السادس…» — يجعل الإجابة مناسبة لمستواك.</p></div>
+<div class="toolcard c-blue"><h3 style="margin-top:0">٤️⃣ التفاصيل والقيود</h3><p style="margin:0">«في 5 نقاط فقط» / «بكلمات بسيطة» / «استخدم أمثلة من كرة القدم»</p></div>
+<div class="toolcard c-violet"><h3 style="margin-top:0">٥️⃣ الشكل المطلوب</h3><p style="margin:0">«على شكل جدول» / «قائمة مرقّمة» / «حوار بين شخصين»</p></div>`);
+
+/* 31. القالب الجاهز */
+PAGES.push(`
+<h2>📐 القالب الجاهز</h2>
+<p>انسخه واملأه في أي وقت:</p>
+<blockquote>«تصرّف كـ <strong>[الدور]</strong>. أنا <strong>[السياق عنك]</strong>. أريدك أن <strong>[المهمة]</strong> حول <strong>[الموضوع]</strong>. يجب أن يكون <strong>[التفاصيل/القيود]</strong>، ومقدَّماً على شكل <strong>[الشكل]</strong>.»</blockquote>
+<h3>مثال مكتمل:</h3>
+<div class="box tip">«تصرّف كمدرّب كرة قدم ودود. أنا طالب عمري 12 سنة وأريد أن أتحسّن في التصويب. أعطني خطة تدريب لأسبوع. يجب أن تكون التمارين بسيطة وآمنة وممتعة، ومقدَّمة على شكل جدول لكل يوم.»</div>
+<h2>🔁 السر الكبير: التكرار والتحسين</h2>
+<blockquote>نادراً ما تحصل على أفضل نتيجة من المحاولة الأولى — والمحترفون يعرفون ذلك!</blockquote>
+<p>لا تتوقف عند أول إجابة! حسّنها:</p>
+<ul class="bullets">
+  <li>«اجعلها أبسط، لم أفهم الجزء الثاني.»</li>
+  <li>«أعطني مثالاً آخر.» / «اجعلها أقصر / أكثر مرحاً.»</li>
+  <li>«ركّز أكثر على ____.»</li>
+</ul>`);
+
+/* 32. الأمانة + النشاط */
+PAGES.push(`
+<div class="box warn"><span class="tag">⚠️ قاعدة الأمانة</span>هندسة الأوامر تساعدك على <strong>التعلّم بشكل أفضل</strong>، لا على <strong>الغش</strong>. الفرق بين «اشرح لي كيف أحلّ هذه المسألة» و«أعطني الجواب لأنسخه» هو الفرق بين أن تصبح أذكى أو أن تخدع نفسك!</div>
+<h2>🎮 نشاط: تحدي تطوير الأمر</h2>
+<ol>
+  <li>يعطي المعلم أمراً ضعيفاً: «اكتب عن الحيوانات».</li>
+  <li>كل طالب يضيف عنصراً واحداً من العناصر الخمسة ليحسّنه.</li>
+  <li>اقرؤوا الأمر النهائي القوي — كم صار أفضل؟</li>
+</ol>
+<div class="box know"><span class="tag">مسابقة</span>من يكتب أقوى أمر لطلب «قصة عن صداقة بين روبوت وطفل»؟ صوّتوا على الأفضل! 🏆</div>
+<h2>🛠️ تطبيق عملي</h2>
+<p>اختر درساً صعباً هذا الأسبوع، واكتب أمراً قوياً بالقالب لتطلب من روبوت محادثة أن <strong>يشرحه لك</strong> بطريقتك المفضّلة. ثم قارن: هل فهمته أفضل من الكتاب؟ احتفظ بالأمر الناجح!</p>`);
+
+/* 33. التحدي + ملخص الوحدة 4 */
+PAGES.push(`
+<h2>🏆 التحدي: دفتر الأوامر الذهبية</h2>
+<p>أنشئ دفتراً فيه أفضل 10 أوامر تكتشفها:</p>
+<ul class="bullets">
+  <li>📚 3 أوامر للدراسة (تلخيص، شرح، اختبار نفسك).</li>
+  <li>🎨 3 أوامر للإبداع (قصص، تصميم، أفكار).</li>
+  <li>⏰ 2 لتنظيم وقتك (جدول مذاكرة، قائمة مهام).</li>
+  <li>💡 2 من اختراعك الخاص.</li>
+</ul>
+<p>لكل أمر اكتب: <strong>ماذا يفعل؟ ولماذا هو قوي؟</strong> قد تصبح أشهر «مهندس أوامر» في صفك!</p>
+<div class="divider">✅</div>
+<div class="box know"><span class="tag">خلاصة الوحدة 4</span>
+<ul>
+  <li>العناصر الخمسة: <strong>الدور + المهمة + السياق + التفاصيل + الشكل</strong>.</li>
+  <li>لا تتوقف عند الإجابة الأولى — <strong>حسّن وكرّر</strong>.</li>
+  <li>استخدم الأوامر <strong>لتفهم لا لتغش</strong>.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «مهندس الأوامر»!</p>`);
+
+
+/* ============ الوحدة 5: البحث الذكي والتحقق ============ */
+
+/* 34. مفتتح */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🕵️</div>
+  <div class="ucount">5</div>
+  <span class="eyebrow">الوحدة الخامسة</span>
+  <h1>البحث الذكي والتحقق من المصادر</h1>
+  <p class="lead" style="color:var(--ink-soft)">كن محقّقاً رقمياً!</p>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستتعلم كيف تبحث بذكاء، وتفرّق بين الحقيقة والمعلومة المضللة والصور المزيفة (Deepfakes)، وكيف تتأكد قبل أن تصدّق.
+</div>`);
+
+/* 35. الفكرة الكبرى */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى</h2>
+<p>في عصرنا، المشكلة ليست <strong>قلّة</strong> المعلومات — بل <strong>كثرتها!</strong> الإنترنت مليء بالحقائق، لكنه مليء أيضاً بالأكاذيب والصور المزيفة. مهارتك الجديدة ليست «إيجاد المعلومة»، بل <strong>«التأكد من أنها صحيحة».</strong></p>
+<blockquote>مهمتك: أن تتحوّل من شخص <em>يصدّق كل ما يراه</em>، إلى <strong>محقّق رقمي</strong> يسأل: «هل هذا صحيح؟ من قاله؟ كيف أتأكد؟»</blockquote>
+<h3>الفرق بين ثلاثة أشياء:</h3>
+<table>
+  <tr><th>النوع</th><th>ما هو؟</th><th>مثال</th></tr>
+  <tr><td>✅ حقيقة</td><td>صحيحة ويمكن إثباتها</td><td>الماء يتجمد عند صفر مئوية</td></tr>
+  <tr><td>❌ معلومة مضللة</td><td>خاطئة، تُنشر بقصد أو بدونه</td><td>الكولا تشفي من الزكام</td></tr>
+  <tr><td>🎭 محتوى مزيف</td><td>صنعه الذكاء ليبدو حقيقياً</td><td>فيديو لمشهور يقول ما لم يقله</td></tr>
+</table>`);
+
+/* 36. خطر الديب فيك + الأسئلة الخمسة */
+PAGES.push(`
+<div class="box warn"><span class="tag">⚠️ خطر الـ Deepfake</span>الذكاء التوليدي صار بارعاً جداً في صنع صور وفيديوهات وأصوات <strong>مزيفة تبدو حقيقية تماماً</strong>. قد ترى فيديو لشخص يقول شيئاً… لكنه لم يحدث قط! لذا «صدّق ما تراه عيناك» <strong>لم تعد كافية</strong> رقمياً.</div>
+<h2>🔍 أدوات المحقّق: 5 أسئلة قبل أن تصدّق</h2>
+<div class="box tip"><span class="tag">١. من المصدر؟</span>موقع/شخص موثوق ومعروف، أم مجهول؟</div>
+<div class="box tip"><span class="tag">٢. هل توجد مصادر أخرى تقولها؟</span>الحقيقة عادةً تذكرها عدة مصادر، لا مصدر غامض واحد.</div>
+<div class="box tip"><span class="tag">٣. ما تاريخها؟</span>هل هي قديمة وعفا عليها الزمن؟</div>
+<div class="box tip"><span class="tag">٤. هل تثير مشاعر قوية فجأة؟</span>الكذب يُصمَّم ليُغضبك أو يُخيفك بسرعة كي تشاركه دون تفكير.</div>
+<div class="box tip"><span class="tag">٥. هل في الصورة شيء «غريب»؟</span>أصابع زائدة، ظلال غير منطقية، فم لا يطابق الصوت — علامات تزييف.</div>`);
+
+/* 37. الأدوات الذكية + خرافة */
+PAGES.push(`
+<div class="box know"><span class="tag">📌 هل تعلم؟</span>المواقع التي تنتهي بـ <strong>.gov</strong> (حكومية) أو <strong>.edu</strong> (تعليمية)، والمؤسسات العلمية والإخبارية الكبرى، عادةً أكثر موثوقية من منشور مجهول. لكن حتى هذه — تحقّق دائماً!</div>
+<h2>🧭 استخدم أدوات البحث بأمان</h2>
+<p>أداة مثل <strong>Perplexity</strong> تعطيك إجابات <strong>مع مصادرها</strong> (روابط تزورها). و<strong>NotebookLM</strong> تجيبك <strong>فقط من ملفاتك أنت</strong>، مع الإشارة للصفحة المصدر.</p>
+<blockquote>القاعدة: لا تكتفِ بإجابة الذكاء الاصطناعي — <strong>اضغط على المصدر وتحقّق بنفسك.</strong> الإجابة الجيدة هي التي تستطيع <em>إثباتها</em>، لا فقط <em>قراءتها</em>.</blockquote>
+<div class="box myth"><span class="tag">🔁 خرافة أم حقيقة؟</span><strong>«إذا كانت الصورة على الإنترنت، فهي حقيقية.» — خرافة!</strong> اليوم يمكن للذكاء صنع صورة لأي شيء، حتى أحداث لم تقع.</div>`);
+
+/* 38. النشاط + التطبيق */
+PAGES.push(`
+<h2>🎮 نشاط: حقيقي أم مزيّف؟</h2>
+<ol>
+  <li>يجهّز المعلم صوراً/عناوين (بعضها حقيقي وبعضها مزيّف).</li>
+  <li>يعرض كل واحدة، والطلاب يصوّتون: حقيقي 👍 أم مزيّف 👎؟</li>
+  <li>ثم يطبّقون «الأسئلة الخمسة».</li>
+  <li>يكشف المعلم الإجابة ويناقشون: ما العلامات التي خدعتنا؟</li>
+</ol>
+<div class="box tip"><span class="tag">نصيحة</span>ابحثوا معاً عن «علامات اكتشاف الصور المولّدة بالذكاء الاصطناعي» — ستندهشون!</div>
+<h2>🛠️ تطبيق عملي</h2>
+<p>اختر «حقيقة» شائعة بين أصدقائك (مثلاً: «نستخدم 10% فقط من أدمغتنا»). طبّق الأسئلة الخمسة وابحث في مصدرين موثوقين. اكتب: «صدّقتُ أن… لكن بعد التحقق اكتشفتُ أن…».</p>
+<div class="box now" style="font-size:.95rem">تلميح: مقولة «10% من الدماغ» تحديداً <strong>خرافة شائعة!</strong> 🧠</div>`);
+
+/* 39. السؤال + التحدي */
+PAGES.push(`
+<h2>🤔 سؤال يجعلك تفكّر</h2>
+<div class="box myth">لماذا تنتشر الأخبار الكاذبة والصور المزيفة <strong>أسرع</strong> أحياناً من الحقيقة؟ ما الذي يجعل الناس يشاركونها دون تحقّق؟ وما مسؤوليتك أنت قبل أن تضغط زر «مشاركة»؟</div>
+<h2>🏆 التحدي: دليل صديقي للتحقق</h2>
+<p>صمّم بطاقة جيب (أو ملصقاً رقمياً) بعنوان <strong>«قبل أن تصدّق… اسأل!»</strong> تحتوي على الأسئلة الخمسة بأسلوبك وألوانك. وزّعها على عائلتك وأصدقائك.</p>
+<div class="box know"><span class="tag">نقطة إضافية</span>أضف في ظهر البطاقة 3 علامات لاكتشاف الصور المزيفة. هدفك: تنشر مهارة التحقق فيصبح جيلك لا يُخدع بسهولة! 🛡️</div>`);
+
+/* 40. ملخص الوحدة 5 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 5</span>
+<ul>
+  <li>فرّق بين <strong>الحقيقة</strong>، و<strong>المعلومة المضللة</strong>، و<strong>المحتوى المزيف</strong>.</li>
+  <li>طبّق <strong>الأسئلة الخمسة</strong> قبل أن تصدّق.</li>
+  <li>استخدم أدوات تعرض <strong>مصادرها</strong> (مثل Perplexity)، وتحقّق بنفسك.</li>
+  <li>«وجوده على الإنترنت» ≠ «أنه صحيح». <strong>كن محقّقاً، لا متفرجاً.</strong></li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «المحقّق الرقمي»!</p>`);
+
+
+/* ============ الوحدة 6: الأخلاقيات والأمان ============ */
+
+/* 41. مفتتح */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🛡️</div>
+  <div class="ucount">6</div>
+  <span class="eyebrow">الوحدة السادسة</span>
+  <h1>أخلاقيات الذكاء الاصطناعي وأمانك الرقمي</h1>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  ستفهم كيف تستخدم الذكاء الاصطناعي بمسؤولية: تحمي خصوصيتك، تحترم حقوق الآخرين، وتبقى آمناً — لأن القوة الكبيرة تحتاج مسؤولية كبيرة.
+</div>`);
+
+/* 42. الفكرة الكبرى + الخصوصية */
+PAGES.push(`
+<h2>💡 الفكرة الكبرى</h2>
+<p>الذكاء الاصطناعي أداة قوية جداً. والأدوات القوية تُستخدم في الخير أو الضرر — تماماً كالنار: تطبخ طعامك أو تحرق بيتك، والفرق هو <strong>كيف</strong> تستخدمها.</p>
+<blockquote>نحن البشر <strong>قادة</strong> الذكاء الاصطناعي. نحن نقرّر ما نصنعه به وما هو مقبول. المسؤولية علينا، لا على الآلة.</blockquote>
+<h2>🛡️ أولاً: خصوصيتك كنزك</h2>
+<div class="box warn"><span class="tag">⚠️ لا تشارك أبداً مع أي أداة:</span>
+<ul>
+  <li>اسمك الكامل، عنوان بيتك أو مدرستك.</li>
+  <li>رقم هاتفك أو هاتف عائلتك.</li>
+  <li>كلمات المرور (لأي شيء، أبداً!).</li>
+  <li>صورك الشخصية أو صور عائلتك دون إذن.</li>
+</ul></div>
+<div class="box know"><span class="tag">📌 القاعدة الذهبية للخصوصية</span>إذا لم تكن لتكتبه على لوحة كبيرة في فناء المدرسة ليراه الجميع، فلا تكتبه لأداة على الإنترنت.</div>`);
+
+/* 43. الملكية الفكرية + التنمر */
+PAGES.push(`
+<h2>🤝 ثانياً: احترم حقوق الآخرين</h2>
+<ul class="bullets">
+  <li>كن <strong>أميناً</strong>: اذكر حين يساعدك الذكاء الاصطناعي، ولا تدّعِ أن عمله كله من إبداعك وحدك.</li>
+  <li>لا تستخدم أعمال الآخرين دون إذن — فالإبداع الذي تعلّمت منه الآلة جاء من جهد بشر حقيقيين.</li>
+  <li>في المدرسة: استخدمه <strong>ليساعدك على التعلّم</strong>، لا ليحلّ واجباتك. هذا <strong>غش أكاديمي</strong> يخدعك أنت قبل غيرك!</li>
+</ul>
+<h2>💔 ثالثاً: اللطف الرقمي ومحاربة التنمّر</h2>
+<div class="box warn"><span class="tag">⚠️ ممنوع تماماً</span>
+<ul>
+  <li>استخدام الذكاء للسخرية من شخص أو إيذائه أو تخويفه.</li>
+  <li>صنع صور مزيفة عن أي شخص (تنمّر إلكتروني، وقد يكون جريمة).</li>
+  <li>نشر كلام جارح، حتى لو كان «مجرد مزحة» — فقد يكون جرحاً عميقاً لغيرك.</li>
+</ul></div>
+<blockquote>قاعدة اللطف: عاملْ الآخرين على الإنترنت كما تحب أن يعاملوك. وإذا تعرّضتَ أو رأيتَ تنمّراً — <strong>أخبر شخصاً بالغاً تثق به فوراً.</strong></blockquote>`);
+
+/* 44. التحيز + التوازن */
+PAGES.push(`
+<h2>🧠 رابعاً: قد يخطئ وقد يتحيّز</h2>
+<p>تذكّر القاعدة الذهبية: <em>الذكاء جيد بقدر أمثلته</em>. لأنه يتعلّم من بيانات صنعها بشر، قد يلتقط <strong>تحيّزات</strong> غير عادلة دون قصد.</p>
+<div class="box tip"><span class="tag">مثال</span>لو دُرّب نموذج على صور أطباء كلهم رجال، قد يظن خطأً أن «الطبيب لا يكون امرأة»! ليس لأنه شرّير، بل لأن أمثلته كانت ناقصة.</div>
+<blockquote>لا تثق بالذكاء الاصطناعي ثقة عمياء. هو يساعد، لكنك أنت من يفكّر ويحكم ويصحّح.</blockquote>
+<h2>⚖️ خامساً: التوازن</h2>
+<ul class="bullets">
+  <li>🧠 <strong>ضعف التفكير:</strong> إن تركته يفكّر بدلاً منك دائماً، تضعف مهاراتك (كعضلة مهملة).</li>
+  <li>😴 <strong>صحتك:</strong> الجلوس الطويل أمام الشاشة يضر عينيك وظهرك ونومك.</li>
+  <li>🤖 <strong>العزلة:</strong> لا تجعل الآلة تحل محل أصدقائك وعائلتك.</li>
+</ul>
+<div class="box now"><span class="tag">الميزان الصحيح</span>استخدمه ليجعلك <strong>أقوى وأذكى وأكثر إبداعاً</strong> — لا <strong>كسولاً ومعتمداً</strong>. خذ فترات راحة، والعب، وفكّر بنفسك أولاً.</div>`);
+
+/* 45. محكمة الذكاء + التطبيق */
+PAGES.push(`
+<h2>🎮 نشاط: محكمة الذكاء الاصطناعي</h2>
+<p>اعرضوا المواقف وحكّموا (مقبول ✅ أم خطأ ❌؟):</p>
+<div class="box know" style="font-size:.95rem">١. طالب يطلب شرح درس صعب. <strong>✅</strong></div>
+<div class="box warn" style="font-size:.95rem">٢. طالب ينسخ مقالاً كاملاً ويسلّمه باسمه. <strong>❌ غش</strong></div>
+<div class="box warn" style="font-size:.95rem">٣. شخص يصنع صورة مزيفة لزميله للسخرية. <strong>❌ تنمّر</strong></div>
+<div class="box warn" style="font-size:.95rem">٤. طالبة تكتب عنوان بيتها لأداة. <strong>❌ خطر خصوصية</strong></div>
+<div class="box know" style="font-size:.95rem">٥. طالب يولّد أفكاراً لمشروع ثم ينفّذه بنفسه ويذكر ذلك. <strong>✅</strong></div>
+<p>قسّموا الصف إلى «محامين» و«قضاة». ما القاعدة الأخلاقية في كل حالة؟</p>
+<h2>🛠️ تطبيق عملي</h2>
+<p>اكتب <strong>«ميثاق الاستخدام المسؤول»</strong> الخاص بك — 5 وعود تقطعها على نفسك. مثال: «أعدُ بأن أتحقق من المعلومات»، «أعدُ بألا أشارك معلوماتي الشخصية». علّقه قرب مكان دراستك.</p>`);
+
+/* 46. السؤال + التحدي */
+PAGES.push(`
+<h2>🤔 سؤال يجعلك تفكّر</h2>
+<div class="box myth">إذا اتخذ ذكاء اصطناعي قراراً خاطئاً أو غير عادل — من يتحمّل المسؤولية؟ الآلة التي لا تشعر؟ الشركة التي صنعتها؟ الشخص الذي اختار البيانات؟ ولماذا من المهم أن يبقى <strong>إنسانٌ</strong> مسؤولاً دائماً؟</div>
+<h2>🏆 التحدي: حملة توعية</h2>
+<p>أنت الآن سفير للاستخدام المسؤول! صمّم <strong>واحداً</strong> مما يلي:</p>
+<ul class="bullets">
+  <li>🎨 ملصق عن «خصوصيتك كنزك».</li>
+  <li>🎬 فيديو قصير (دقيقة) عن خطر الـ Deepfake والتنمّر.</li>
+  <li>📋 نشرة من 3 طيّات عن «قواعد اللعب الآمن».</li>
+</ul>
+<div class="box now"><span class="tag">هدفك النبيل</span>اعرض عملك في إذاعة المدرسة أو لوحتها، لتجعل مدرستك كلها أكثر وعياً وأماناً! 🌟</div>`);
+
+/* 47. ملخص الوحدة 6 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 6</span>
+<ul>
+  <li><strong>نحن قادة الذكاء الاصطناعي</strong> — المسؤولية علينا.</li>
+  <li>احمِ <strong>خصوصيتك</strong>: لا تشارك معلوماتك السرية أبداً.</li>
+  <li>كن <strong>أميناً</strong> (لا غش)، و<strong>لطيفاً</strong> (لا تنمّر).</li>
+  <li>الذكاء قد <strong>يخطئ ويتحيّز</strong> — فكّر بنفسك وصحّحه.</li>
+  <li>حافظ على <strong>التوازن</strong> — أداة تقوّيك، لا تُكسلك.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «السفير المسؤول»!</p>`);
+
+
+/* ============ الوحدة 7: صندوق الأدوات ============ */
+
+/* 48. مفتتح + قاعدتان */
+PAGES.push(`
+<div class="unit-hero">
+  <div class="robot">🧰</div>
+  <div class="ucount">7</div>
+  <span class="eyebrow">الوحدة السابعة • المرجعية</span>
+  <h1>صندوق أدواتك الذكية</h1>
+</div>
+<div class="box now" style="border-color:var(--teal);background:#eafaf5;color:#0a5a59">
+  <span class="tag">🎯 الهدف</span>
+  هذه وحدتك المرجعية! ستتعرف على أهم الأدوات التي تفيدك في دراستك وحياتك — مع نبذة، أهمية، استخدامات، مميزات، طريقة استخدام، وأهم نماذج كل أداة.
+</div>
+<div class="box warn"><span class="tag">⚠️ قبل أن نبدأ — قاعدتان مهمتان</span>
+<ul>
+  <li><strong>معظم هذه الأدوات تشترط عمراً معيناً</strong> (غالباً 13+ سنة، وبعضها يحتاج إذن ولي الأمر). استخدمها <strong>دائماً بإشراف الكبار</strong>.</li>
+  <li>عالم الذكاء يتغيّر بسرعة! الأسماء صحيحة وقت الكتابة، لكنها تتطور. القاعدة الثابتة: <strong>افهم ما تفعله الأداة، لا تحفظ أزرارها فقط.</strong></li>
+</ul></div>`);
+
+/* 49. كيف تختار */
+PAGES.push(`
+<h2>🧰 كيف تختار الأداة المناسبة؟</h2>
+<blockquote>القاعدة الذهبية: الأداة الصحيحة تعتمد على <strong>مهمتك</strong>، لا على <strong>شهرتها</strong>.</blockquote>
+<div class="box tip"><span class="tag">✍️ تريد كتابة أو شرحاً أو أفكاراً؟</span>← روبوت محادثة: ChatGPT، Gemini، Claude، Copilot</div>
+<div class="box tip"><span class="tag">🔍 تريد بحثاً بمصادر موثوقة؟</span>← Perplexity</div>
+<div class="box tip"><span class="tag">📚 تريد المذاكرة من ملفاتك أنت؟</span>← NotebookLM</div>
+<p class="center" style="color:var(--teal-deep);font-weight:700;margin-top:14px">في الصفحات التالية: بطاقة مفصّلة لكل أداة 👇</p>`);
+
+/* 50. ChatGPT */
+PAGES.push(`
+<div class="toolcard c-green">
+<h2><span class="dot" style="background:var(--grass)">G</span>ChatGPT</h2>
+<p><span class="field">نبذة:</span> أشهر روبوت محادثة في العالم، من شركة OpenAI. يتحدث بطلاقة ويساعدك في الكتابة والشرح والأفكار، ويولّد الصور أيضاً.</p>
+<p><span class="field">أهميته:</span> كان الشرارة التي عرّفت العالم على الذكاء التوليدي. أداة شاملة متعددة المواهب.</p>
+<p><span class="field">استخداماته لك:</span> شرح الدروس الصعبة • تلخيص النصوص • توليد أفكار للمشاريع • التدرّب على اللغات.</p>
+<p><span class="field">مميزاته:</span> سهل، يفهم العربية جيداً، متعدد المهام (نص + صور + صوت)، نسخة مجانية.</p>
+<p><span class="field">طريقة استخدامه:</span> افتح الموقع/التطبيق ← اكتب أمرك (تذكّر العناصر الخمسة!) ← اقرأ ← حسّن بأوامر متابعة.</p>
+<p><span class="field">نماذجه المهمة:</span> عائلة <strong>GPT</strong> (مثل GPT-4o وما بعده). كلما كان الرقم أعلى، كان أحدث وأقدر عادةً.</p>
+</div>`);
+
+/* 51. Gemini */
+PAGES.push(`
+<div class="toolcard c-blue">
+<h2><span class="dot" style="background:var(--sky)">✦</span>Google Gemini</h2>
+<p><span class="field">نبذة:</span> روبوت المحادثة من جوجل. قوي جداً ومدمج مع خدمات جوجل التي تعرفها (البحث، الخرائط، يوتيوب، Docs).</p>
+<p><span class="field">أهميته:</span> متّصل بكمّ هائل من المعلومات والخدمات، وممتاز في فهم الصور والملفات.</p>
+<p><span class="field">استخداماته لك:</span> الأبحاث المدرسية بمعلومات حديثة • تحليل صورة مسألة رياضية وشرحها • المساعدة داخل مستندات جوجل.</p>
+<p><span class="field">مميزاته:</span> مدمج مع أدوات جوجل، بارع في الوسائط المتعددة، يفهم العربية جيداً.</p>
+<p><span class="field">طريقة استخدامه:</span> افتح Gemini بحساب جوجل (بإشراف ولي الأمر) ← اكتب أمرك أو ارفع صورة ← تفاعل وحسّن.</p>
+<p><span class="field">نماذجه المهمة:</span> عائلة <strong>Gemini</strong> (مثل Pro للمهام الأقوى، و Flash للسرعة).</p>
+</div>`);
+
+/* 52. Copilot */
+PAGES.push(`
+<div class="toolcard c-violet">
+<h2><span class="dot" style="background:var(--violet)">⊞</span>Microsoft Copilot</h2>
+<p><span class="field">نبذة:</span> المساعد الذكي من مايكروسوفت، مدمج في ويندوز وبرامج أوفيس (Word، PowerPoint، Excel) ومتصفح Edge.</p>
+<p><span class="field">أهميته:</span> إن كنت تستخدم برامج مايكروسوفت في مدرستك، فهو مساعدك <strong>داخل</strong> البرامج نفسها.</p>
+<p><span class="field">استخداماته لك:</span> كتابة بحث داخل Word • تصميم عرض في PowerPoint بسرعة • تنظيم جداول Excel • البحث داخل المتصفح.</p>
+<p><span class="field">مميزاته:</span> مدمج مع برامج تعرفها، يوفّر وقتك في المهام المدرسية، يعتمد على نماذج قوية.</p>
+<p><span class="field">طريقة استخدامه:</span> ابحث عن أيقونة Copilot في أوفيس أو ويندوز ← اطلب بلغة طبيعية ← راجع وعدّل.</p>
+<p><span class="field">نماذجه المهمة:</span> يعتمد على نماذج <strong>GPT</strong> المتقدمة (شراكة مع OpenAI) + نماذج مايكروسوفت.</p>
+</div>`);
+
+/* 53. Claude */
+PAGES.push(`
+<div class="toolcard c-amber">
+<h2><span class="dot" style="background:var(--amber);color:#5a3c00">✳</span>Claude</h2>
+<p><span class="field">نبذة:</span> روبوت محادثة من شركة Anthropic، معروف بإجاباته المدروسة والمنظّمة وبأسلوبه الآمن والمهذّب.</p>
+<p><span class="field">أهميته:</span> ممتاز في الكتابة الطويلة، والتحليل العميق، وقراءة المستندات الطويلة وتلخيصها بدقة.</p>
+<p><span class="field">استخداماته لك:</span> تلخيص كتاب طويل وفهمه • تحرير المقالات والقصص • شرح المواضيع المعقّدة بصبر خطوة بخطوة.</p>
+<p><span class="field">مميزاته:</span> يتعامل مع نصوص طويلة جداً، إجاباته منظّمة وواضحة، تركيز عالٍ على الأمان والاستخدام المسؤول.</p>
+<p><span class="field">طريقة استخدامه:</span> افتح Claude ← اكتب أمرك أو ارفع ملفاً ← اقرأ الإجابة المنظّمة ← اطلب تعمّقاً.</p>
+<p><span class="field">نماذجه المهمة:</span> عائلة <strong>Claude</strong> (مثل Opus للمهام الأقوى، و Haiku للسرعة).</p>
+</div>`);
+
+/* 54. Perplexity */
+PAGES.push(`
+<div class="toolcard c-coral">
+<h2><span class="dot" style="background:var(--coral)">?</span>Perplexity</h2>
+<p><span class="field">نبذة:</span> ليست مجرد روبوت محادثة، بل <strong>محرّك بحث ذكي</strong>. يجيب سؤالك <strong>ويعطيك المصادر</strong> (روابط) التي بنى عليها إجابته.</p>
+<p><span class="field">أهميته:</span> الأداة المثالية للمحقّق الرقمي! تجمع سرعة الإجابة مع إمكانية التحقق من المصدر.</p>
+<p><span class="field">استخداماته لك:</span> البحث المدرسي عند الحاجة لمصادر موثوقة • التأكد من صحة معلومة • إجابات حديثة من الإنترنت.</p>
+<p><span class="field">مميزاته:</span> يذكر <strong>مصادره دائماً</strong> (ميزته الكبرى)، يبحث لحظياً، يبني فيك عادة التحقق.</p>
+<p><span class="field">طريقة استخدامه:</span> اكتب سؤالك ← اقرأ الإجابة ← <strong>والأهم: اضغط روابط المصادر وتحقّق بنفسك</strong> قبل اعتمادها.</p>
+<p><span class="field">نماذجه المهمة:</span> يستخدم مزيجاً من نماذج قوية (مثل GPT و Claude وغيرها) لإجاباته المدعومة بالمصادر.</p>
+</div>`);
+
+/* 55. NotebookLM */
+PAGES.push(`
+<div class="toolcard c-gold">
+<h2><span class="dot" style="background:var(--gold)">📓</span>NotebookLM</h2>
+<p><span class="field">نبذة:</span> أداة دراسة عبقرية من جوجل. ترفع إليها <strong>ملفاتك أنت</strong> (ملاحظاتك، فصول الكتاب، فيديوهات)، فتجيبك <strong>فقط</strong> من هذه المصادر.</p>
+<p><span class="field">أهميتها:</span> «رفيق المذاكرة» المثالي! إجاباتها مرتبطة بمنهجك مباشرة، مع الإشارة للصفحة المصدر.</p>
+<p><span class="field">استخداماتها لك:</span> ملخّص ودليل مذاكرة من فصولك • <strong>بطاقات تعليمية واختبارات</strong> من موادك • <strong>خرائط ذهنية</strong> • <strong>ملخّص صوتي (بودكاست)</strong> تستمع له في طريقك للمدرسة!</p>
+<p><span class="field">مميزاتها:</span> تجيب من <strong>مصادرك أنت</strong> (دقة عالية)، تشير للصفحة المصدر، تحوّل المذاكرة المملة إلى تجربة ممتعة.</p>
+<p><span class="field">طريقة استخدامها:</span> أنشئ «دفتراً» ← ارفع ملفاتك ← اطلب ملخّصاً أو اختباراً أو خريطة ذهنية أو ملخّصاً صوتياً.</p>
+<p><span class="field">نماذجها المهمة:</span> مبنية على نماذج <strong>Gemini</strong> من جوجل.</p>
+</div>
+<div class="box warn" style="font-size:.92rem"><span class="tag">⚠️ انتبه</span>الملخّص الصوتي ممتع، لكنه قد يبسّط أكثر من اللازم. استخدمه <strong>للمراجعة بعد</strong> قراءة المصدر الأصلي، لا بديلاً عنه.</div>`);
+
+/* 56. أدوات أخرى */
+PAGES.push(`
+<h2>🌟 أدوات أخرى مفيدة <span style="font-size:.8rem;color:var(--coral)">(للرجوع — بإشراف الكبار)</span></h2>
+<p>عالم الأدوات واسع! تذكّر هذه الفئات كمرجع لمشاريعك:</p>
+<table>
+  <tr><th>الفئة</th><th>لماذا تفيدك؟</th></tr>
+  <tr><td>🎨 توليد الصور</td><td>أغلفة المشاريع، الرسوم التوضيحية، الأفكار البصرية</td></tr>
+  <tr><td>🎬 توليد/تحرير الفيديو</td><td>مقاطع قصيرة لعروضك التقديمية</td></tr>
+  <tr><td>🗣️ تحويل النص لصوت</td><td>تحويل أبحاثك لملفات صوتية</td></tr>
+  <tr><td>🎭 العروض التقديمية الذكية</td><td>تصميم شرائح احترافية بسرعة</td></tr>
+  <tr><td>🎵 توليد الموسيقى</td><td>موسيقى أصلية لمشاريعك</td></tr>
+  <tr><td>💻 تعلّم البرمجة</td><td>مساعدتك على كتابة الأكواد</td></tr>
+</table>
+<div class="box now"><span class="tag">تذكير دائم</span>قبل أي أداة جديدة اسأل: هل عمري مناسب؟ هل لديّ إذن؟ هل أحمي خصوصيتي؟ هل سأتحقق من نتائجها؟</div>`);
+
+/* 57. المشروع الختامي */
+PAGES.push(`
+<h2>🏆 المشروع الختامي الكبير: معرض إنجازي</h2>
+<p>حان وقت أن تجمع كل ما تعلّمته في مشروع واحد تفخر به! اختر موضوعاً تحبّه وأنشئ عنه مشروعاً متكاملاً يستخدم <strong>ثلاث أدوات على الأقل</strong>:</p>
+<ol>
+  <li>🔍 <strong>ابحث</strong> بـ Perplexity (واذكر مصادرك! ✅).</li>
+  <li>✍️ <strong>اكتب ونظّم</strong> بمساعدة روبوت محادثة (والفكرة منك!).</li>
+  <li>🎨 <strong>صمّم</strong> صورة أو عرضاً أو فيديو بأداة توليدية.</li>
+  <li>📚 <strong>راجع وذاكر</strong> بـ NotebookLM إن أردت.</li>
+</ol>
+<div class="box know"><span class="tag">شروط النجاح (تطبيق كل ما تعلّمت)</span>
+<ul>
+  <li>✅ استخدمت هندسة أوامر ذكية (و4).</li>
+  <li>✅ تحقّقت من معلوماتك (و5).</li>
+  <li>✅ كنت أميناً وذكرت أين ساعدك الذكاء (و6).</li>
+  <li>✅ الفكرة والإبداع منك — الأدوات مجرد مساعدين.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.1rem">اعرض مشروعك في معرض الصف! أنت الآن مُبدع مسؤول 🎉</p>`);
+
+/* 58. ملخص الوحدة 7 */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">✅</div></div>
+<h2 class="center">الآن أنت تعرف</h2>
+<div class="box know"><span class="tag">خلاصة الوحدة 7</span>
+<ul>
+  <li>اختر الأداة حسب <strong>مهمتك</strong>: محادثة، بحث بمصادر، أو مذاكرة من ملفاتك.</li>
+  <li>لكل أداة قوّتها: <strong>ChatGPT/Gemini/Claude/Copilot</strong> للمحادثة، <strong>Perplexity</strong> للبحث الموثّق، <strong>NotebookLM</strong> للمذاكرة.</li>
+  <li>استخدمها <strong>بإشراف الكبار</strong>، واحمِ <strong>خصوصيتك</strong>، و<strong>تحقّق</strong>.</li>
+  <li>الأداة تتغير، لكن <strong>مهاراتك في الفهم والتفكير والمسؤولية تبقى</strong> الأهم.</li>
+</ul></div>
+<p class="center" style="color:var(--coral);font-weight:900;font-size:1.15rem">🏅 لقد حصلتَ على شارة «سيّد الأدوات»!</p>`);
+
+
+/* ============ الخاتمة والملحقات ============ */
+
+/* 59. الخاتمة */
+PAGES.push(`
+<div class="center"><div style="font-size:3rem">🎓</div></div>
+<h1 class="center">أنت الآن قائد، لا متفرّج</h1>
+<p>مرحى! وصلتَ إلى نهاية رحلتنا… لكنها في الحقيقة <strong>بداية</strong> رحلتك الخاصة.</p>
+<p>عندما بدأنا، كان الذكاء الاصطناعي ربما يبدو صندوقاً سحرياً غامضاً. الآن أنت تعرف الحقيقة:</p>
+<ul class="bullets">
+  <li>ليس سحراً — بل <strong>رياضيات وأمثلة صنعها بشر</strong>.</li>
+  <li>ليس حياً — بل <strong>أداة قوية أنت تقودها</strong>.</li>
+  <li>ليس دائماً صحيحاً — بل <strong>يحتاج عقلك أنت لتتحقق منه</strong>.</li>
+</ul>
+<blockquote>التقنية تتغيّر كل يوم، لكن مهاراتك في <strong>التفكير، والفضول، والأمانة، واللطف</strong> — هي التي ستجعلك مميزاً دائماً.</blockquote>
+<p>العالم يحتاج جيلاً لا يخاف من الذكاء الاصطناعي ولا يعبده — بل يفهمه ويستخدمه بحكمة ويصنع به مستقبلاً أفضل. هذا الجيل هو <strong>أنت</strong>.</p>
+<p class="center" style="font-size:1.2rem;color:var(--teal-deep);font-weight:900">أنا فخور بك. الآن… اذهب وأبدِع شيئاً مدهشاً! 🚀</p>
+<p class="center" style="color:var(--ink-soft)">— صديقك، <strong>ذَكي</strong> 🤖</p>`);
+
+/* 60. الشهادة */
+PAGES.push(`
+<h2 class="center">🏅 شهادة الإنجاز</h2>
+<div class="certificate">
+  <div class="seal">🏆</div>
+  <h3 style="color:var(--teal-deep)">شهادة إتمام رحلة الذكاء الاصطناعي</h3>
+  <p style="margin:10px 0">تشهد هذه الشهادة بأن:</p>
+  <div class="line"></div>
+  <p style="margin:10px 0">قد أكمل بنجاح جميع وحدات كتاب<br><strong>«رحلة في عالم الذكاء الاصطناعي»</strong><br>وأتقن مهارات الفهم والإبداع وهندسة الأوامر والتحقق والاستخدام المسؤول.</p>
+  <div class="award">🌟 مُبدع مسؤول في الذكاء الاصطناعي 🌟</div>
+  <div style="display:flex;justify-content:space-around;margin-top:18px;font-size:.9rem;color:var(--ink-soft)">
+    <span>التاريخ: <span class="line" style="min-width:90px"></span></span>
+    <span>التوقيع: <span class="line" style="min-width:90px"></span></span>
+  </div>
+</div>`);
+
+/* 61. القاموس */
+PAGES.push(`
+<h2>📖 قاموس المصطلحات</h2>
+<p style="color:var(--ink-soft)">كلماتك الجديدة التي صرت تعرفها الآن:</p>
+<table>
+  <tr><th>المصطلح</th><th>المعنى بكلمات بسيطة</th></tr>
+  <tr><td><strong>الذكاء الاصطناعي</strong></td><td>برنامج يتعلّم الأنماط من الأمثلة بدلاً من قواعد ثابتة.</td></tr>
+  <tr><td><strong>تعلّم الآلة</strong></td><td>تحسّن الحاسوب بالممارسة: تخمين ← فحص ← تعديل ← تكرار.</td></tr>
+  <tr><td><strong>بيانات التدريب</strong></td><td>الأمثلة التي يتعلّم منها الذكاء الاصطناعي.</td></tr>
+  <tr><td><strong>الخوارزمية</strong></td><td>وصفة من خطوات دقيقة يتبعها الحاسوب.</td></tr>
+  <tr><td><strong>الشبكة العصبية</strong></td><td>طريقة تعلّم مستوحاة بشكل بسيط من خلايا الدماغ (ليست دماغاً حقيقياً!).</td></tr>
+  <tr><td><strong>النموذج اللغوي</strong></td><td>ذكاء بارع في «تخمين الكلمة التالية» ليكتب نصوصاً.</td></tr>
+  <tr><td><strong>الذكاء التوليدي</strong></td><td>ذكاء يصنع محتوى جديداً: نص، صور، صوت، فيديو.</td></tr>
+  <tr><td><strong>الذكاء الضيّق</strong></td><td>بارع في مهمة واحدة فقط — واقعنا اليوم.</td></tr>
+  <tr><td><strong>هندسة الأوامر</strong></td><td>فن كتابة طلباتك للذكاء الاصطناعي بوضوح ودقة.</td></tr>
+  <tr><td><strong>الهلوسة</strong></td><td>عندما يخترع الذكاء معلومة خاطئة بثقة.</td></tr>
+  <tr><td><strong>التزييف العميق (Deepfake)</strong></td><td>صورة/فيديو/صوت مزيّف يبدو حقيقياً، صنعه الذكاء.</td></tr>
+  <tr><td><strong>التحيّز</strong></td><td>ميل غير عادل يلتقطه الذكاء من أمثلة ناقصة.</td></tr>
+</table>`);
+
+/* 62. دليل المعلم وولي الأمر - أ */
+PAGES.push(`
+<span class="eyebrow">للكبار</span>
+<h1>👨‍🏫 دليل المعلّم وولي الأمر</h1>
+<h3>كيف صُمّم هذا الكتاب؟</h3>
+<p>مبني على فلسفة <strong>التعلّم بالممارسة والاكتشاف</strong> لا التلقين. كل وحدة تتبع بنية ثابتة (هدف ← شرح ← نشاط ← تطبيق ← سؤال تفكير ← مشروع). الفئة 9–16 سنة، بقلب موجّه لـ 9–12 وتعمّق يناسب 13–16 في الأخلاقيات وهندسة الأوامر والتحقق.</p>
+<h3>دقّة المفاهيم — قاعدتنا الأهم</h3>
+<div class="box know"><span class="tag">علّموا الأطفال أن الذكاء الاصطناعي:</span>
+<ul>
+  <li><strong>لا يفكّر ولا يشعر</strong> كالإنسان — بل يميّز أنماطاً ويخمّن.</li>
+  <li><strong>ليس سحراً</strong> — رياضيات وأمثلة صنعها بشر.</li>
+  <li><strong>قد يخطئ ويتحيّز</strong> — البشر يبقون مسؤولين.</li>
+  <li><strong>ليس روبوتاً معدنياً</strong> بالضرورة — الروبوت جسد، والذكاء عقل/برنامج.</li>
+</ul></div>
+<h3>نصائح للتطبيق في الصف</h3>
+<ul class="bullets">
+  <li>ابدأوا بالنشاط قبل الشرح أحياناً — الاكتشاف أرسخ.</li>
+  <li>شجّعوا النقاش في «أسئلة التفكير» — الهدف بناء التفكير الناقد.</li>
+  <li>اجعلوا المشاريع تعاونية.</li>
+  <li>معظم الأنشطة تصلح صفّياً وأونلاين (غرف نقاش رقمية / بطاقات وملصقات ورقية).</li>
+</ul>`);
+
+/* 63. دليل المعلم - ب (التقييم والتحفيز) */
+PAGES.push(`
+<h3>نصائح لولي الأمر في البيت</h3>
+<ul class="bullets">
+  <li><strong>الإشراف ضروري:</strong> معظم أدوات الوحدة 7 تشترط 13+ وإذن ولي الأمر.</li>
+  <li><strong>اضبطوا التوازن:</strong> أوقات محددة للشاشة، وتشجيع اللعب والتفكير المستقل.</li>
+  <li><strong>كونوا قدوة:</strong> أظهِروا كيف تتحققون أنتم من المعلومات.</li>
+  <li><strong>احتفوا بالإبداع لا بالنسخ.</strong></li>
+</ul>
+<h3>📊 التقييم وتتبّع التقدّم</h3>
+<table>
+  <tr><th>الأداة</th><th>كيف تستخدمها؟</th></tr>
+  <tr><td>ملف الإنجاز</td><td>يجمع الطالب مشاريع الوحدات السبع.</td></tr>
+  <tr><td>بطاقة التقدّم</td><td>✅ بعد كل وحدة عند إتمام التحدّي.</td></tr>
+  <tr><td>التقييم الذاتي</td><td>«ماذا تعلّمت؟ وما الغامض؟»</td></tr>
+  <tr><td>المشروع الختامي</td><td>المعيار الأكبر — يدمج كل المهارات.</td></tr>
+</table>
+<h3>🎮 أفكار التحفيز (Gamification)</h3>
+<div class="box now"><span class="tag">🏅 شارات الوحدات</span>مكتشف الأنماط • خبير الأنواع • المُبدع التوليدي • مهندس الأوامر • المحقّق الرقمي • السفير المسؤول • سيّد الأدوات.</div>
+<ul class="bullets">
+  <li>🎖️ شهادة الإنجاز عند إكمال الرحلة.</li>
+  <li>🏆 لوحة شرف: أفضل «دفتر أوامر»، أفضل «مشروع معرض».</li>
+  <li>⭐ نظام نقاط للنشاط + نقاط للإبداع والأمانة والمساعدة.</li>
+</ul>
+<div class="box tip"><span class="tag">أين يُطبَّق؟</span>معسكرات الذكاء الصيفية • ورش العمل المدرسية • البرامج الأكاديمية • مختبرات الابتكار • برامج تدريب الناشئة.</div>`);
+
+/* 64. عن الكتاب (النهاية) */
+PAGES.push(`
+<div class="center"><div style="font-size:2.6rem">📋</div></div>
+<h2 class="center">عن هذا الكتاب</h2>
+<div class="box know">
+<p><strong>العنوان:</strong> رحلة في عالم الذكاء الاصطناعي — دليل الجيل الذكي</p>
+<p><strong>الفئة المستهدفة:</strong> 9 – 16 سنة</p>
+<p><strong>النوع:</strong> كتاب تعليمي تفاعلي (مع لمسة قصصية ومرشد محبّب «ذَكي»)</p>
+<p><strong>المحتوى:</strong> 7 وحدات + خاتمة + شهادة + قاموس + دليل المعلّم</p>
+<p><strong>ما يعلّمه:</strong> مفهوم الذكاء الاصطناعي وأنواعه، الذكاء التوليدي، هندسة الأوامر، البحث والتحقق من المصادر، الأخلاقيات والأمان الرقمي، وأهم الأدوات العملية.</p>
+<p><strong>فلسفته:</strong> تنشئة جيل يفهم الذكاء الاصطناعي، ويُبدع به، ويستخدمه بمسؤولية — قادةً لا متفرجين.</p>
+<p><strong>إعداد وتصميم:</strong> نادية الحبسية — مدرّبة ذكاء اصطناعي.</p>
+</div>
+<p class="center" style="font-size:1.4rem;color:var(--teal-deep);font-weight:900;margin-top:20px">🎉 تهانينا على إكمال الرحلة! 🎉</p>
+<p class="center" style="color:var(--ink-soft)">عُد إلى أي وحدة في أي وقت عبر الفهرس 📖</p>
+<p class="center" style="color:var(--teal-deep);font-size:.95rem;font-weight:700;margin-top:18px;padding-top:12px;border-top:1px solid var(--line)">© جميع الحقوق محفوظة — إعداد وتصميم نادية الحبسية، مدرّبة ذكاء اصطناعي.</p>`);
+
+
+/* ============================================================
+   منطق التنقّل
+   ============================================================ */
+(function(){
+  const book = document.getElementById('book');
+  PAGES.forEach((html,i)=>{
+    const d = document.createElement('div');
+    d.className = 'page' + (i===0?' active':'');
+    d.innerHTML = html;
+    book.appendChild(d);
+  });
+  const pages = [...document.querySelectorAll('.page')];
+  let cur = 0;
+  const total = pages.length;
+  document.getElementById('total').textContent = total;
+  const prevBtn = document.getElementById('prev');   // ‹ يذهب للسابق (RTL)
+  const nextBtn = document.getElementById('next');   // › يذهب للتالي
+  const curEl = document.getElementById('cur');
+  const prog = document.getElementById('prog');
+
+  function show(n){
+    if(n<0||n>=total) return;
+    pages[cur].classList.remove('active');
+    cur = n;
+    pages[cur].classList.add('active');
+    pages[cur].scrollTop = 0;
+    curEl.textContent = cur+1;
+    prog.style.width = ((cur+1)/total*100)+'%';
+    prevBtn.disabled = (cur===0);
+    nextBtn.disabled = (cur===total-1);
+  }
+  nextBtn.onclick = ()=>show(cur+1);
+  prevBtn.onclick = ()=>show(cur-1);
+
+  // arrow keys: in RTL, Right arrow = previous, Left arrow = next
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft')  show(cur+1);
+    if(e.key==='ArrowRight') show(cur-1);
+  });
+
+  // table of contents click (delegated)
+  document.addEventListener('click',e=>{
+    const li = e.target.closest('[data-go]');
+    if(li){ show(parseInt(li.dataset.go,10)); }
+  });
+
+  // menu button -> go to contents page (index 4)
+  document.getElementById('menuBtn').onclick = ()=>show(4);
+
+  show(0);
+})();
+
+
+
+</script>
+</body>
+</html>
